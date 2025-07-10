@@ -14,7 +14,7 @@ struct ContentView: View {
         NavigationStack{
             List(data.activities){ activity in
                 NavigationLink{
-                    Text("Detail View")
+                    ActivityView(data: data, activity: activity)
                 }label:{
                     HStack{
                         Text(activity.title)

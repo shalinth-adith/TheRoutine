@@ -8,11 +8,34 @@
 import SwiftUI
 
 struct AddActivity: View {
+    var data : Activities
+    
+    @State private var title = ""
+    @State private var description = ""
+    
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack{
+            Form{
+                TextField("Title",text: $title)
+                TextField("Description",text: $description)
+            }
+            .navigationTitle("Add Activity")
+            .toolbar{
+                Button("Save"){
+                    let trimmedTitle = title.trimmingCharacters(in: .whitespaces)
+                    guard trimmedTitle.isEmpty == false else {return}
+                    
+                    let activity = Activity(title:trimmedTitle,description: description)
+                    data.activities.append(activity)
+                    dismiss()
+                }
+            }
+        }
     }
 }
 
 #Preview {
-    AddActivity()
+    AddActivity(data:Activities())
 }

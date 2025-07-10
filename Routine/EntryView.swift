@@ -14,7 +14,7 @@ struct EntryView: View {
             ContentView()
         }else {
             VStack{
-                Image("logo")
+                Image("loogo")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 200, height: 200)

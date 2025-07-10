@@ -9,8 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var data = Activities()
-    @State private var addingNewActivity: Bool = false
-
+    @State private var addingNewActivity = false
+    @State private var showCalendar = false
+    
     var body: some View {
         NavigationStack {
             List {
@@ -20,9 +21,9 @@ struct ContentView: View {
                     } label: {
                         HStack {
                             Text(activity.title)
-
+                            
                             Spacer()
-
+                            
                             Text(String(activity.completionCount))
                                 .font(.caption.weight(.black))
                                 .padding(5)
@@ -37,25 +38,39 @@ struct ContentView: View {
             }
             .navigationTitle("Routine")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Add new activity", systemImage: "plus") {
-                        addingNewActivity.toggle()
-                    }
-                }
                 ToolbarItem(placement: .navigationBarLeading) {
                     EditButton()
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    HStack {
+                        Button {
+                            showCalendar.toggle()
+                        } label: {
+                            Image(systemName: "calendar")
+                        }
+                        
+                        Button {
+                            addingNewActivity.toggle()
+                        } label: {
+                            Image(systemName: "plus")
+                        }
+                    }
                 }
             }
             .sheet(isPresented: $addingNewActivity) {
                 AddActivity(data: data)
             }
+            .sheet(isPresented: $showCalendar) {
+                CalendarView(data: data)
+            }
         }
     }
-
+    
     func delete(at offsets: IndexSet) {
         data.activities.remove(atOffsets: offsets)
     }
-
+    
     func color(for activity: Activity) -> Color {
         if activity.completionCount < 3 {
             return .red
@@ -74,3 +89,4 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+

@@ -13,6 +13,7 @@ struct Activity : Codable,Hashable,Identifiable {
     var title : String
     var description : String
     var completionCount = 0
+    var completedDates: [Date] = [] 
     
     static let example = Activity(title: "Example Activity", description: "This is an example activity")
  }

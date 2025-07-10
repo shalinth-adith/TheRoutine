@@ -8,11 +8,25 @@
 import SwiftUI
 
 struct CalendarView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    var data: Activities
 
-#Preview {
-    CalendarView()
+    var body: some View {
+        NavigationStack {
+            List {
+                ForEach(data.activities) { activity in
+                    Section(activity.title) {
+                        if activity.completedDates.isEmpty {
+                            Text("No completions yet")
+                                .foregroundStyle(.gray)
+                        } else {
+                            ForEach(activity.completedDates.sorted(by: >), id: \.self) { date in
+                                Text(date.formatted(date: .abbreviated, time: .omitted))
+                            }
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Completion Calendar")
+        }
+    }
 }

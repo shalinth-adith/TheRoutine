@@ -8,8 +8,29 @@
 import SwiftUI
 
 struct EntryView: View {
+    @State private var showMain = false
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        if showMain{
+            ContentView()
+        }else {
+            VStack{
+                Image("logo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 200, height: 200)
+                Button("Get Started"){
+                    withAnimation {
+                        showMain = true
+                    }
+                }
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .clipShape(Capsule())
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color(.systemBackground))
+        }
     }
 }
 
